@@ -13,16 +13,16 @@ const { CustomKeyboard} = NativeModules;
 
 const {
   install, uninstall, getSelectionRange,
-  insertText, backSpace, doDelete,
+  insertText, backSpace, doDelete, 
   moveLeft, moveRight,
-  switchSystemKeyboard,
+  switchSystemKeyboard, dismiss,
 } = CustomKeyboard;
 
 export {
   install, uninstall, getSelectionRange,
   insertText, backSpace, doDelete,
   moveLeft, moveRight,
-  switchSystemKeyboard,
+  switchSystemKeyboard, dismiss,
 };
 
 const keyboardTypeRegistry = {};
@@ -53,7 +53,9 @@ export class CustomTextInput extends Component {
     customKeyboardType: PropTypes.string,
   };
   componentDidMount() {
-    install(findNodeHandle(this.input), this.props.customKeyboardType, this.props.maxLength === undefined ? 1024 : this.props.maxLength);
+    setTimeout(() => {
+      install(findNodeHandle(this.input), this.props.customKeyboardType, this.props.maxLength === undefined ? 1024 : this.props.maxLength);
+    }, 100)
   }
   componentWillReceiveProps(newProps) {
     if (newProps.customKeyboardType !== this.props.customKeyboardType) {
